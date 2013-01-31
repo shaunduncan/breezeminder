@@ -1,0 +1,49 @@
+{% from 'macros/social.html' import social_buttons %}
+
+<hr />
+
+<div class="row" id="footer">
+    <div class="span12">
+        {{ social_buttons(mini=True) }}
+
+        <p style="font-size: 1em; padding-top: 1em">
+            {{ config.SITE_NAME }} &copy; {{ now|strftime("%Y") }} | 
+            <a href="{{ url_for('privacy') }}" title="Privacy Policy">Privacy Policy</a> | 
+            <a href="{{ url_for('terms') }}" title="Terms and Conditions">Terms and Conditions</a> | 
+            <a href="{{ url_for('contact') }}" title="Contact Us">Contact Us</a> | 
+            <a href="{{ url_for('marta.status') }}" title="Realtime MARTA&reg; Status">Realtime MARTA&reg; Status</a>
+        </p>
+
+        <p>
+            <a href="http://www.breezecard.com/" rel="nofollow" target="_blank" title="Breeze&reg; Card Website">Breeze&reg;</a>
+            and <a href="http://www.itsmarta.com/" rel="nofollow" target="_blank" title="MARTA&reg; Website">MARTA&reg;</a>
+            are registered trademarks of the Metropolitan Atlanta Rapid Transit Authority.
+        </p>
+
+        <p>
+            This site is not affiliated with or endorsed by 
+            <a href="http://www.itsmarta.com/" rel="nofollow" target="_blank" title="MARTA&reg; Website">MARTA&reg;</a>
+        </p>
+
+        <p>
+            Based on <a href="http://twitter.github.com/bootstrap" target="_blank" rel="nofollow" title="Bootstrap by Twitter">Bootstrap</a> |   
+            Icons by <a href="http://glyphicons.com/" target="_blank" rel="nofollow" title="Glyphicons">Glyphicons</a> | 
+            Theme based on <a href="http://bootswatch.com/" target="_blank" rel="nofollow" title="Bootswatch - Themes for Bootstrap">Bootswatch</a>
+        </p>
+
+        {% if config.get('SHOW_ARCH_CREDITS', False) %}
+            <p>
+                Powered By 
+                <a href="http://flask.pocoo.org/" target="_blank" rel="nofollow" title="Flask Microframework">Flask</a>
+                and
+                <a href="http://mongodb.org/" target="_blank" rel="nofollow" title="MongoDB">MongoDB</a>
+            </p>
+        {% endif %}
+
+        <p style="margin: 5px 0px;">
+            <span id="siteseal">
+                <script type="text/javascript" src="https://seal.starfieldtech.com/getSeal?sealID=nE9TfW1ZuoY5G7DuOkxqm2atV2mcMWxQQRR9AfBOqgRZTRDAE00a"></script>
+            </span>
+        </p>
+    </div>
+</div>

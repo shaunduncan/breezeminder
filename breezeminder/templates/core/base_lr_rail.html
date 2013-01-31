@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+
+{% import 'macros/adsense.html' as adsense with context %}
+
+
+{% block content %}
+<div class="row">
+    <div class="span9">
+        {% block subnav %}{% endblock %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="span9">
+        {% block ad_left_rail_head %}
+            {# POSSIBLE :: AdSense Image Leaderboard (728 x 90) #}
+            {# {{ adsense.ad("9451674456", 728, 90) }} #}
+        {% endblock %}
+
+        {% block left_rail %}{% endblock %}
+
+        {% block ad_left_rail_foot %}
+            <div style="text-align: center">
+                {% if is_mobile %}
+                    {# AdSense Mobile Leaderboard (320x50) #}
+                {% else %}
+                    {# AdSense Image/Text Leaderboard (728 x 90) #}
+                {% endif %}
+            </div>
+        {% endblock %}
+    </div>
+
+    <div class="span3" style="text-align: center">
+        {% block right_rail %}
+            {% block ad_right_rail %}
+                <div class="hidden-phone">
+                    {# AdSense Image Wide Skyscraper (160x600) #}
+                </div>
+            {% endblock %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

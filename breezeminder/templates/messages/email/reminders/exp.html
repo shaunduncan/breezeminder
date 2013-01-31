@@ -1,0 +1,25 @@
+{% extends 'messages/email/base_to_user.html' %}
+
+
+{% from 'macros/reminders.html' import email_linkback with context %}
+
+
+{%- block content %}
+    <p>
+        This is just a friendly reminder that your Breeze&reg; Card ending in
+        {{ card.last_four }} or a product stored on your card is going
+        to be expiring in <b>{{ reminder.threshold }} {{ reminder.quantifier }}</b> or less.
+    </p>
+
+    <ul>
+        {% if expiring['card'] %}
+            <li>Card ending in {{ card.last_four }} will expire on {{ card.expiration_date|strftime }}</li>
+        {% endif %}
+
+        {% for product in expiring['products'] %}
+            <li>Product {{ product.name }} will expire on {{ product.expiration_date|strftime }}</li>
+        {% endfor %}
+    </ul>
+
+    {{ email_linkback(card) }}
+{%- endblock %}

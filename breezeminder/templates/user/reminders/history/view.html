@@ -1,0 +1,47 @@
+{% extends 'core/base_lr_rail.html' %}
+
+
+{% import 'macros/util.html' as util with context %}
+
+
+{% block left_rail %}
+    <h1>Reminder History Details</h1>
+
+    <table class="table table-no-border table-condensed">
+        <tbody>
+            <tr>
+                <td>
+                    <b>Reminder</b>
+                </td>
+                <td>{{ record.reminder.description() | safe }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <b><span class="hidden-phone">Card </span>Number</b>
+                </td>
+                <td>{{ record.card.number_masked }}</td>
+            </tr>
+            <tr>
+                <td><b>Sent</b></td>
+                <td>{{ record.sent_date|strftime }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Message</h3>
+    <p>{{ record.message | safe }}</p>
+
+    <div class="well">
+        <a href="{{ url_for('user.cards.view', pk_hash=record.card.pk_hash) }}" class="btn" rel="tooltip" data-original-title="View Details">
+            View Card
+        </a>
+        
+        <a href="{{ url_for('user.reminders.edit', pk_hash=record.reminder.pk_hash) }}" class="btn" rel="tooltip" data-original-title="View Reminder">
+            View Reminder
+        </a>
+
+        <a href="{{ url_for('user.reminders.history', pk_hash=record.reminder.pk_hash) }}" class="btn" rel="tooltip" data-original-title="Back to Reminder History">
+            Back
+        </a>
+    </div>
+{% endblock %}

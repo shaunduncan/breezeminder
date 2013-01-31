@@ -1,0 +1,105 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <h1>Privacy Policy</h1>
+    <h6>Last Updated July 15, 2012</h6>
+
+    <div class="policy">
+        <p>
+            Knowing what information you provide us and how we use it is important, and that's what
+            we want you to know from this privacy policy. In a nutshell, we won't sell your information,
+            but we do require you give us a couple pieces of information about yourself in order to
+            provide you with our product, {{ config.SITE_NAME }}. And just so everyone understands, when we say
+            words like <b>service</b> or <b>product</b>, we're referring to everything this website does
+            for you.
+        </p>
+
+
+        <h3>Information We Collect</h3>
+        <p>
+            In order for us to provide you this service we have to collect various pieces of information.
+            The amount of personal information you need to provide is extremely minimal and includes, but
+            is not limited to:
+        </p>
+
+        <ul>
+            <li>Your Name (First and Last)</li>
+            <li>Your Email Address</li>
+            <li>Your Mobile Phone Number</li>
+            <li>Your Breeze&reg; Card Number</li>
+        </ul>
+
+        <p>
+            Some of this information, such as your email address, is required to register with this service, while
+            others, such as your first and last name, are not.
+        </p>
+
+        <p>
+            We will <b>never</b> require you to enter any highly confidential personal information such as your
+            Social Security number, credit card number, or debit card number. {{ config.SITE_NAME }} is a free service and there is
+            currently no need for us to gather this information from you.
+        </p>
+
+
+        <h3>Why We Collect This Information</h3>
+        <p>
+            Plain and simple, we only require you to give information that allows us to provide you with
+            explicitly the services provided on this website including:
+        </p>
+
+        <ul>
+            <li>Monitoring Your Breeze&reg; Card Details</li>
+            <li>Maintaining Your Personal Reminders</li>
+            <li>Maintaining Your Personal Details (Listed Above)</li>
+        </ul>
+
+
+        <h3>What We Do With Your Information</h3>
+        <p>
+            First and foremost, we will never or sell or share your information to any third party. 
+            It's bad karma. We also won't use your personal information outside of providing you the services
+            on this website without your express permission. However, we do store your information on our
+            servers for the purpose of providing our services to you without having to require you to 
+            continuously provide us with it. Also, and this is important, we will occasionally use your 
+            Breeze&reg; Card card numbers to retrieve and store the details about your card we provide.
+            This is done by contacting a third party service, but in no way do we ever send any personally
+            identifiable information along with your Breeze&reg; Card number to this service. This communication
+            is the only outside communication and is done securely over <abbr title="Secure Socket Layer">SSL</abbr>.
+        </p>
+
+        <p>
+            This site is sponsored using advertisements. And as such you should be aware that third party
+            advertisers may be reading or setting cookies from your browser in order to deliver advertisements
+            to you. Because of this, you should know that we do not store any personal information about you
+            via cookies.
+        </p>
+
+
+        <h3>Cookies</h3>
+        <p>
+            Cookies are required to use this site. We use cookies expressly for keeping track if you are logged
+            into the site or not. Note that, for your own security, we do not store any personally identifiable 
+            information about you via cookies. At some points, to deliver advertisements, some third party advertisers
+            may read or set cookies on your browser. This is done in the course of serving advertisements to you.
+            Also, some third party services we use to monitor site traffic may use cookies to collect completely
+            anonymous site traffic data. At no point do we, nor any third party, explicitly monitor your browsing
+            habits.
+        </p>
+
+
+        <h3>Maintaining Your Information</h3>
+        <p>
+            You can directly control the personal information we have about you just by logging into this website.
+            Also, if at any point you delete stored information we have, we will delete it permanently from our system.
+            On the same note, you can also delete your entire account permanently by 
+            <a href="mailto:help@{{ config.DOMAIN }}" title="Email help@{{ config.DOMAIN }}">contacting us</a> and simply requesting that we remove your account.
+        </p>
+
+
+        <h3>Contacting Us</h3>
+        <p>
+            If at any point you want to contact us about this privacy policy or should you have any other questions
+            please don't hesititate to contact us by emailing <a href="mailto:help@{{ config.DOMAIN }}" title="Email help@{{ config.DOMAIN }}">help@{{ config.DOMAIN }}</a>
+        </p>
+    </div>
+{% endblock %}

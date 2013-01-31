@@ -1,0 +1,10 @@
+{%- block sms_msg -%}
+    Breeze Card ({{ card.last_four }}) and/or products expire in {{ reminder.threshold }} {{ reminder.quantifier }}.
+    {%- if expiring['card'] -%}
+        Card exp. {{ card.expiration_date|strftime }}. 
+    {% endif %}
+    {%- for prod in expiring['products'] -%}
+        {{ prod.name }} exp. {{ prod.expiration_date|strftime }}. 
+    {% endfor %}
+    {{ card.shorturl|default('') }}
+{% endblock %}

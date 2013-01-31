@@ -1,0 +1,58 @@
+{% extends 'core/base_lr_rail.html' %}
+
+
+{% import 'macros/util.html' as util with context %}
+
+
+{% block left_rail %}
+    <h1>Your Breeze&reg; Cards</h1>
+    {{ util.flash(messages) }}
+    <table class="table table-striped table-bordered actions-table">
+        <thead>
+            <tr>
+                <th>Card Number</th>
+                <th class="hidden-phone">Stored Value</th>
+                <th class="hidden-phone">Expires On</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in cards %}
+                <tr>
+                    <td>{{ card.number_masked }}</td>
+                    <td class="hidden-phone">
+                        {% if card.has_data %}
+                            ${{ card.stored_value }}
+                        {% endif %}
+                    </td>
+                    <td class="hidden-phone">
+                        {% if card.has_data %}
+                            {{ card.expiration_date|strftime }}
+                        {% endif %}
+                    </td>
+                    <td style="text-align: center; width: 90px">
+                        <a href="{{ url_for('user.cards.view', pk_hash=card.pk_hash) }}"
+                            class="btn" rel="tooltip" data-original-title="View Details">
+                                <i class="icon icon-search"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="promptDelete('{{ url_for('user.cards.delete', pk_hash=card.pk_hash) }}');"
+                            class="btn btn-danger" rel="tooltip" data-original-title="Delete Card">
+                                <i class="icon icon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4"><i>No cards</i></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <a class="btn btn-success" href="{{ url_for('user.cards.add') }}" title="Add a new card">Add Card</a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

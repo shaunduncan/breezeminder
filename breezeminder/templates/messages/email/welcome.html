@@ -1,0 +1,16 @@
+{% extends 'messages/email/base_to_user.html' %}
+
+
+{% block content %}
+<p>
+    Welcome to {{ config.SITE_NAME }}! You know have access to the {{ config.SITE_NAME }} site
+    and can start setting up reminders right away. All you need to do is log in,
+    add your Breeze&reg; Card and add a few reminders. We'll handle the rest!
+</p>
+
+<p>
+    But before you get started, we need you to verify your email address. Simply click
+    <a href="https://{{ config.DOMAIN }}{{ url_for('auth.verify', pk_hash=current_user.pk_hash) }}" title="Verify Your Account">here</a>
+    or visit https://{{ config.DOMAIN }}{{ url_for('auth.verify', pk_hash=current_user.pk_hash) }} in your browser.
+</p>
+{% endblock %}

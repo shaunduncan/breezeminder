@@ -1,0 +1,7 @@
+{%- block sms_msg -%}
+    Products on Breeze Card ({{ card.last_four }}) are now available. 
+    {%- for prod in card.products -%}
+        {% if prod not in last_state.products %}{{ prod.name }}. {% endif %}
+    {% endfor %}
+    {{ card.shorturl|default('') }}
+{% endblock %}

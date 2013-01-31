@@ -1,0 +1,60 @@
+{% extends 'core/base_lr_rail.html' %}
+
+
+{% import 'macros/forms.html' as forms with context %}
+{% import 'macros/util.html' as util with context %}
+
+
+{% block title %}Manage Your Profile{% endblock %}
+
+{% block left_rail %}
+    <h1>Manage Your Profile</h1>
+
+    {{ util.flash(messages) }}
+
+    <div class="well">
+        <form method="post" class="form-horizontal">
+            {% if current_user.needs_to_verify_phone %}
+                <fieldset class="control-group">
+                    <legend>Verify Cell Phone</legend>
+                    <p>
+                        We've sent an activation code to your cell phone number
+                        <b>{{ current_user.cell_phone.format() }}</b>. Please enter
+                        the code you received below and click 'Verify'. Alternatively,
+                        you can request the code be resent or cancel verification. If you
+                        cancel, you won't be able to receive text message reminders.
+                    </p>
+
+                    {{ forms.field_with_errors(form.verify_code) }}
+                </fieldset>
+
+                <div class="form-actions">
+                    {{ forms.submit_button('Verify') }}
+                    {{ forms.go_button('Resend Code', url_for('user.mobile.resend')) }}
+                    {{ forms.go_button('Cancel', url_for('user.mobile.cancel'), confirm=True) }}
+                </div>
+            {% else %}
+                <fieldset class="control-group">
+                    <legend>Personal Information</legend>
+                    <div class="control-group">
+                        <label class="control-label">Email Address</label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on"><i class="icon-envelope"></i></span><input type="text" readonly disabled class="input-large" value="{{ current_user.email}}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    {% for field in form %}
+                        {{ forms.field_with_errors(field) }}
+                    {% endfor %}
+                </fieldset>
+
+                <div class="form-actions">
+                    {{ forms.submit_button('Save') }}
+                    {{ forms.go_button('Cancel', url_for('index')) }}
+                </div>
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}

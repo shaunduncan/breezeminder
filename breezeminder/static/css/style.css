@@ -1,0 +1,120 @@
+body {
+    position: relative;
+    padding-top: 50px;
+}
+
+html, body { height: 100%; }
+
+.navbar .brand {
+    font-weight: 400;
+}
+
+table.actions-table tbody td { vertical-align: middle; }
+
+table.table-no-border td,
+table.table-no-border th {
+    border-top: none;
+}
+table.table th { background: #efefef; }
+
+#footer { text-align: center; }
+#footer p { font-size: .85em; margin-bottom: 0px; padding-bottom: 0px; }
+
+.header-icon { 
+    float: left;
+    margin: 7px 5px 0 0;
+    opacity: .8;
+    vertical-align: middle;
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.blurbs { margin-bottom: 50px; }
+.blurbs h2 { font-size: 22px; }
+
+.jumbotron { 
+    position: relative;
+    padding-bottom: 0px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+.jumbotron h1 {
+    font-size: 72px;
+    margin-bottom: 9px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+.jumbotron p {
+    margin-bottom: 18px;
+    font-weight: 300;
+}
+
+#page-nav { float: right; }
+
+.well .form-actions {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+#wide_rail_ad {
+    margin-top: 50px;
+}
+
+hr {
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
+    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
+    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
+    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
+    border: 0;
+}
+
+.policy p, .policy li {
+    font-size: 1.25em;
+    line-height: 1.25em;
+}
+
+
+/* RESPONSIVE - Phone */
+@media (max-width: 480px) {
+    body {
+        padding-top: 0;
+    }
+
+    h1 { font-size: 24px; }
+    
+    #page-nav { float: left; }
+
+    .jumbotron, .blurbs { margin-bottom: 10px; }
+    .jumbotron h1 { font-size: 36px; }
+    #wide_rail_ad { margin-top: 10px; }
+}
+
+/* RESPONSIVE - Landscape phone, Portrait tablet */
+@media (max-width: 767px) {
+    body {
+        padding-top: 0;
+    }
+    
+    #page-nav { float: left; }
+
+    .jumbotron, .blurbs { margin-bottom: 10px; }
+    .jumbotron h1 { font-size: 36px; }
+    #wide_rail_ad { margin-top: 10px; }
+}
+
+/* RESPONSIVE - Landscape tablet and small desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+    body {
+        padding-top: 0;
+    }
+    
+    #page-nav { float: left; }
+
+    .jumbotron, .blurbs { margin-bottom: 25px; }
+    #wide_rail_ad { margin-top: 25px; }
+}

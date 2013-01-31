@@ -1,0 +1,27 @@
+{% extends 'core/base_lr_rail.html' %}
+
+{% import 'macros/forms.html' as forms %}
+{% import 'macros/util.html' as util %}
+
+{% block left_rail %}
+    <h1>{{ title }}</h1>
+    {{ util.flash(messages) }}
+    <div class="well">
+        <form method="post" class="form-horizontal">
+            <fieldset>
+                {% for field in form %}
+                    {{ forms.field_with_errors(field) }}
+                {% endfor %}
+            </fieldset>
+            <div class="form-actions">
+                {{ forms.submit_button('Login') }}
+                {{ forms.go_button('Cancel', '/') }}
+
+                <div style="margin-top: 5px">
+                    Not a member? <a href="/register" title="Register">Register for FREE!</a><br />
+                    <a href="{{ url_for('auth.reset_password') }}" title="Reset Password">Forgot Password?</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

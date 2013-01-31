@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% import 'macros/forms.html' as forms %}
+{% import 'macros/util.html' as util %}
+
+{% block content %}
+
+<div class="row span8 offset2">
+    <h1>Login Required</h1>
+    
+    <div class="well">
+        <p>
+            You need to be logged in to do that! Click
+            <a href="{{ url_for('auth.login', next=request.url) }}" title="Login">here</a>
+            to login.
+        </p>
+
+        <p>
+            Not a registered user? Click 
+            <a href="{{ url_for('auth.register', next=request.url) }}" title="Register">here</a>
+            to register. It's 100% free!
+        </p>
+    </div>
+</div>
+{% endblock %}

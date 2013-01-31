@@ -1,0 +1,9 @@
+{%- block sms_msg -%}
+    Products on Breeze Card ({{ card.last_four }}) below {{ reminder.threshold }} round trips: 
+    {%- for prod in card.products -%}
+        {%- if (prod.remaining_rides|int / 2) | int <= reminder.threshold|int -%}
+            {{ prod.name }} - {{ (prod.remaining_rides|int / 2) | int }} round trips.
+        {% endif %}
+    {% endfor %}
+    {{ card.shorturl|default('') }}
+{% endblock %}

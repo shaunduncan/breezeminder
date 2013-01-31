@@ -1,0 +1,41 @@
+{% extends 'core/base_lr_rail.html' %}
+
+
+{% import 'macros/forms.html' as forms with context %}
+{% import 'macros/util.html' as util with context %}
+
+
+{% block left_rail %}
+    <h1>We Want To Hear From You!</h1>
+    <p>
+        If you have any comments or feedback about {{ config.SITE_NAME }}, don't hesitate to reach out.
+        You can reach us by either completing the form below to send us a message or email us
+        directly at <a href="mailto:help@{{ config.DOMAIN }}" title="Email help@{{ config.DOMAIN }}">help@{{ config.DOMAIN }}</a>. We'd be
+        happy to address any concerns you might have!
+    </p>
+
+    {{ util.flash(messages) }}
+
+    <div class="well">
+        <form method="post" class="form-horizontal">
+            {{ forms.field_with_errors(form.email) }}
+            {{ forms.field_with_errors(form.subject) }}
+
+            <div class="control-group{% if form.message.errors %} error{% endif %}">
+                {{ form.message.label(class="control-label", text="%s *" % form.message.label.text) }}
+
+                <div class="controls">
+                    {{ form.message(class='input-xlarge', rows='8') }}
+                    {% if form.message.errors %}
+                        <span class="help-inline">{{ form.message.errors | first | e }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                {{ forms.submit_button('Send Message') }}
+                {{ forms.go_button('Cancel', url_for('index')) }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

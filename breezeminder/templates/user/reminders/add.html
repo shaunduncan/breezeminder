@@ -1,0 +1,13 @@
+{% extends 'core/base_lr_rail.html' %}
+
+
+{% import 'macros/util.html' as util with context %}
+{% from 'macros/reminders.html' import reminder_form with context %}
+
+
+{% block left_rail %}
+    <h1>Add Reminder</h1>
+    {{ util.flash(messages) }}
+
+    {{ reminder_form(form, 'Create Reminder') }}
+{% endblock %}

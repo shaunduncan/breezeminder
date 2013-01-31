@@ -1,0 +1,68 @@
+#map {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+}
+
+/* Fix Google Maps */
+#map img {
+    max-width: none;
+}
+
+.map-controls { display: none; }
+.attribution { font-size: .85em;}
+div.attribution { padding: 5px 0px 5px 0px }
+
+#fullscreen-ctrl {
+    position: absolute;
+    display: none;
+    bottom: 0px;
+    left: 0px;
+    z-index: 100001;
+    height: 38px;
+    padding-left: 5px;
+    padding-bottom: 0px;
+    width: 100%;
+
+    /* Make similar looking to navbar */
+    background-color: #27398a;
+    background-image: -moz-linear-gradient(top, #344697, #142677);
+    background-image: -ms-linear-gradient(top, #344697, #142677);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#344697), to(#142677));
+    background-image: -webkit-linear-gradient(top, #344697, #142677);
+    background-image: -o-linear-gradient(top, #344697, #142677);
+    background-image: linear-gradient(top, #344697, #142677);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#344697', endColorstr='#142677', GradientType=0);
+}
+#fullscreen-ctrl div.btn-toolbar {
+    margin: 5px 0px;
+}
+
+.next-bus-info { display: none; padding: 5px 0px; }
+.next-bus-info ul { list-style: none; padding-left: 0px; margin-left: 0px; }
+.next-bus-info ul li { padding-left: 5px; padding-left: 0px; margin-left: 0px; }
+
+ul.plain { list-style: none; padding: 0px; margin: 0px 0px 5px 0px }
+
+#toggle-me { display: none; }
+
+.top-map-ctrl {
+    padding: 0px;
+    margin: 0px 0px 5px 0px;
+    float: right;
+}
+.top-map-ctrl .btn-toolbar { margin: 0px; }
+.visible-geolocated { display: none; }
+
+#map-modal {
+    display: none;
+    position: fixed;
+    top: 0px !important;
+    left: 0px !important;
+    width: 100% !important;
+    z-index: 100000 !important;
+}
+
+#templates { display: none; }
+.geo-error { display: none; }

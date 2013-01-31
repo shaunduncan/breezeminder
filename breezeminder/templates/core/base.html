@@ -1,0 +1,147 @@
+{% import 'macros/adsense.html' as adsense with context %}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" prefix="og: http://ogp.me/ns#" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="description" content="{{ description | default("BreezeMinder is an automatic reminder system for your MARTA public transit Breeze Cards") }}" />
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" />
+
+        <!-- Open Graph -->
+        <meta property="og:site_name" content="{{ config.SITE_NAME }}" />
+        <meta property="og:title" content="{{ title|default(config.SITE_NAME) }}" />
+        <meta property="og:description" content="{{ description | default("BreezeMinder is an automatic reminder system for your MARTA public transit Breeze Cards") }}" />
+        <meta property="og:url" content="{{ request.url|default('https://breezeminder.com') }}" />
+        <meta property="og:type" content="website" />
+
+        <title>
+            {% if title %}{{ title }} | {% endif %}{{ config.SITE_NAME }}
+        </title>
+
+        <!-- jQuery -->
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}"></script>
+
+        <!-- Twitter Bootstrap -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-united.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-responsive.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/breezeminder.css') }}" />
+        <script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+
+        <!-- Misc -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='zocial/css/zocial.css') }}" />
+        <script type="text/javascript">
+            function promptDelete(goUrl)
+            {
+                if(confirm('Are you sure you want to delete?'))
+                {
+                    window.location = goUrl;
+                }
+            }
+
+            function promptGo(goUrl)
+            {
+                if(confirm('Are you sure?'))
+                {
+                    window.location = goUrl;
+                }
+            }
+        </script>
+        {{ config.ANALYTICS_CODE | safe }}
+
+        {% block head_scripts %}{% endblock %}
+    </head>
+    <body>
+        {% block navigation %}
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="brand" href="/" alt="Alarm Clock Icon" title="{{ config.SITE_NAME }} Home">
+                            <img height="16" style="vertical-align: baseline" src="{{ url_for('static', filename='images/glyphicons_053_alarm_white.png') }}" />
+                            {{ config.SITE_NAME }}
+                        </a>
+
+                        <button type="button" class="btn btn-navbar hidden-desktop" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <div class="nav-collapse collapse" id="page-nav">
+                            {% block navigation_navbar %}
+                                <ul class="nav">
+                                    {% if current_user and current_user.is_authenticated() %}
+                                        <li class="{% if request.url.endswith(url_for('user.profile')) %}active{% endif %}">
+                                            <a href="{{ url_for('user.profile') }}" title="Manage Your Profile"><i class="icon-user icon-white"></i> Profile</a>
+                                        </li>
+                                        <li class="{% if url_for('user.reminders') in request.url %}active{% endif %}">
+                                            <a href="{{ url_for('user.reminders') }}" title="Manage Your Reminders"><i class="icon-time icon-white"></i> Reminders</a>
+                                        </li>
+                                        <li class="{% if url_for('user.cards') in request.url %}active{% endif %}">
+                                            <a href="{{ url_for('user.cards') }}" title="Manage Your Breeze&reg; Cards"><i class="icon-cog icon-white"></i> Breeze&reg; Cards</a>
+                                        </li>
+                                        <li class="{% if url_for('user.password') in request.url %}active{% endif %}">
+                                            <a href="{{ url_for('user.password') }}" title="Change Your Password"><i class="icon-lock icon-white"></i> Change Password</a>
+                                        </li>
+                                        <li><a href="{{ url_for('marta.status') }}" title="Realtime MARTA&reg; Status">Realtime MARTA&reg; Status</a></li>
+                                        <li><a href="{{ url_for('auth.logout') }}" title="Logout"><i class="icon-off icon-white"></i> Logout</a></li>
+                                    {% else %}
+                                        <li class="{% if url_for('marta.status') in request.url %}active{% endif %}">
+                                            <a href="{{ url_for('marta.status') }}" title="Realtime MARTA&reg; Status">Realtime MARTA&reg; Status</a>
+                                        </li>
+                                        <li><a href="{{ url_for('auth.login') }}" title="Login">Login</a></li>
+                                        <li><a href="{{ url_for('auth.register') }}" title="Register">Register</a></li>
+                                    {% endif %}
+                                </ul>
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+
+        <div class="container">
+            {% block alerts %}
+                {% for alert in alerts %}
+                <div class="alert alert-{{ alert.level|default('info') }}">
+                    <span class="icon icon-exclamation-sign" style="margin-top: 1px"></span>
+                    {{ alert.message | safe }}
+                </div>
+                {% endfor %}
+            {% endblock %}
+
+            {% block content %}{% endblock %}
+
+            {% block footer_text_ad %}
+                {% if show_footer_ad %}
+                    <div class="row" id="wide_rail_ad">
+                        <div class="span12" style="text-align: center">
+                            {% if is_mobile %}
+                                {# AdSense Mobile Leaderboard (320x50) #}
+                            {% else %}
+                                {# AdSense Text Links - Wide (728x15) #}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            {% block footer %}
+                {% include 'core/footer.html' with context %}
+            {% endblock %}
+        </div>
+
+        <script type="text/javascript">
+            $('.dropdown-toggle').dropdown();
+
+            {% if not is_mobile %}
+                $('*[rel=popover]').popover();
+                $('*[rel=tooltip]').tooltip();
+            {% endif %}
+        </script>
+
+        {% block foot_scripts %}{% endblock %}
+    </body>
+</html>

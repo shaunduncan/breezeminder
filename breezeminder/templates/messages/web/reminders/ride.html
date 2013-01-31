@@ -1,0 +1,17 @@
+{% extends 'messages/web/reminders/base.html' %}
+
+
+{% block content %}
+    <p>
+        The following products on your Breeze&reg; Card ending in 
+        {{ card.last_four }} are at or below <b>{{ reminder.threshold }} remaining rides</b>.
+    </p>
+
+    <ul>
+        {% for product in card.products %}
+            {% if product.remaining_rides|int <= reminder.threshold|int %}
+                <li>{{ product.name }} has {{ product.remaining_rides|int }} remaining rides</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

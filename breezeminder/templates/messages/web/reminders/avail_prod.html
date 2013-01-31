@@ -1,0 +1,17 @@
+{% extends 'messages/web/reminders/base.html' %}
+
+
+{% block content %}
+    <p>
+        The following products on your
+        Breeze&reg; Card ending in {{ card.last_four }} are now available.
+    </p>
+
+    <ul>
+        {% for product in card.products %}
+            {% if product not in last_state.products %}
+                <li>{{ product.name }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

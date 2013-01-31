@@ -1,0 +1,214 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <h1>Terms and Conditions</h1>
+    <h6>Last Updated August 15, 2012</h6>
+
+    <div class="policy">
+        <p>
+            The following terms and conditions govern all use of the {{ config.DOMAIN }} website and all 
+            content, services and products available at or through the website (taken together, the Website).
+            The Website is owned and operated by {{ config.COMPANY_FULL_NAME }} ("{{ config.COMPANY_NAME }}"). The Website is offered 
+            subject to your acceptance without modification of all of the terms and conditions contained 
+            herein and all other operating rules, policies (including, without limitation, 
+            <a href="{{ url_for('privacy') }}" title="Privacy Policy">{{ config.SITE_NAME }}'s Privacy Policy</a>) and 
+            procedures that may be published from time to time on this Site by {{ config.COMPANY_NAME }} (collectively, the "Agreement").
+        </p>
+
+        <p>
+            Please read this Agreement carefully before accessing or using the Website. By accessing or 
+            using any part of the web site, you agree to become bound by the terms and conditions of 
+            this agreement. If you do not agree to all the terms and conditions of this agreement, 
+            then you may not access the Website or use any services. If these terms and conditions are 
+            considered an offer by {{ config.COMPANY_NAME }}, acceptance is expressly limited to these terms. 
+            The Website is available only to individuals who are at least 13 years old.
+        </p>
+
+
+        <h3>Your {{ config.SITE_NAME }} Account</h3>
+        <p>
+            If you create an account on the Website, you are responsible for maintaining the 
+            security of your account, and you are fully responsible for all activities that 
+            occur under the account and any other actions taken in connection with your account.
+            You must immediately notify {{ config.COMPANY_NAME }} of any unauthorized uses of your account or any other 
+            breaches of security. {{ config.COMPANY_NAME }} will not be liable for any acts or omissions by You, 
+            including any damages of any kind incurred as a result of such acts or omissions.
+        </p>
+
+
+        <h3>You and Your Account</h3>
+        <p>
+            By creating an account on {{ config.SITE_NAME }}.com, you grant {{ config.COMPANY_NAME }} a world-wide, 
+            royalty-free, and non-exclusive license to reproduce, modify, and adapt the Content 
+            of your account solely for the purpose of providing services related to {{ config.DOMAIN }} 
+            directly to you. This is not to state that we will publicly publish your personal information,
+            as outlined in the <a href="{{ url_for('privacy') }}" title="Privacy Policy">{{ config.SITE_NAME }} Privacy Policy</a>.
+        </p>
+        
+        <p>
+            {{ config.COMPANY_NAME }} has the right (though not the obligation) to, in {{ config.COMPANY_NAME }}'s sole discretion 
+            terminate or deny access to and use of the Website to any individual or entity for any reason, 
+            in {{ config.COMPANY_NAME }}'s sole discretion.
+        </p>
+
+
+        <h3>Content Posted on Other Websites</h3>
+        <p>
+            {{ config.COMPANY_NAME }} occasionally provides links on {{ config.DOMAIN }} to third party Sites and services as part of 
+            giving credit to incorporated works or software, or to provide You with additional services
+            or information. We have not reviewed, and cannot review, all of the material, including 
+            computer software, made available through the websites and webpages to which 
+            {{ config.DOMAIN }} links, and that link to {{ config.DOMAIN }}. {{ config.COMPANY_NAME }} does not have any 
+            control over those non-{{ config.DOMAIN }} websites and webpages, and is not responsible for their 
+            contents or their use. By linking to a non-{{ config.DOMAIN }} website or webpage, {{ config.COMPANY_NAME }} 
+            does not represent or imply that it endorses such website or webpage. You are responsible 
+            for taking precautions as necessary to protect yourself and your computer systems from 
+            viruses, worms, Trojan horses, and other harmful or destructive content. {{ config.COMPANY_NAME }} 
+            disclaims any responsibility for any harm resulting from your use of non-{{ config.DOMAIN }} 
+            websites and webpages.
+        </p>
+
+
+        <h3>Copyright Infringement and DMCA Policy</h3>
+        <p>
+            As {{ config.COMPANY_NAME }} asks others to respect its intellectual property rights, it respects the 
+            intellectual property rights of others. If you believe that material located on or linked 
+            to by {{ config.DOMAIN }} violates your copyright, you are encouraged to notify {{ config.SITE_NAME }} 
+            at <a href="mailto:dmca@{{ config.DOMAIN }}" title="Email dmca@{{ config.DOMAIN }}">dmca@{{ config.DOMAIN }}</a>. {{ config.COMPANY_NAME }} will 
+            respond to all such notices, including as required or appropriate by removing the infringing 
+            material or disabling all links to the infringing material.
+        </p>
+
+
+        <h3>Intellectual Property</h3>
+        <p>
+            This Agreement does not transfer from {{ config.COMPANY_NAME }} to you any {{ config.COMPANY_NAME }} or third 
+            party intellectual property, and all right, title and interest in and to such property 
+            will remain (as between the parties) solely with {{ config.COMPANY_NAME }}. Some trademarks, service marks, 
+            graphics and logos used in connection with the Website may be the trademarks of other third parties. 
+            Your use of the Website grants you no right or license to reproduce or otherwise use any 
+            {{ config.COMPANY_NAME }} or third-party trademarks.
+        </p>
+
+
+        <h3>Advertisement</h3>
+        <p>
+            As part of providing a free service, {{ config.COMPANY_NAME }} reserves the right to display any
+            number of advertisements to you during your use of the Website.
+        </p>
+
+
+        <h3>Changes</h3>
+        <p>
+            {{ config.COMPANY_NAME }} reserves the right, at its sole discretion, to modify or replace any part of 
+            this Agreement. It is your responsibility to check this Agreement periodically for changes. 
+            Your continued use of or access to the Website following the posting of any changes to this 
+            Agreement constitutes acceptance of those changes. {{ config.COMPANY_NAME }} may also, in the future, 
+            offer new services and/or features through the Website (including, the release of new 
+            tools and resources). Such new features and/or services shall be subject to the terms and 
+            conditions of this Agreement.
+        </p>
+
+
+        <h3>Termination</h3>
+        <p>
+            {{ config.COMPANY_NAME }} may terminate your access to all or any part of the Website at any time, with 
+            or without cause, with or without notice, effective immediately. If you wish to terminate 
+            this Agreement or your {{ config.DOMAIN }} account (if you have one), you may simply discontinue 
+            using the Website or specifically request account termination by contacting {{ config.SITE_NAME }} in
+            writing at <a href="mailto:help@{{ config.DOMAIN }}" title="Email help@{{ config.DOMAIN }}">help@{{ config.DOMAIN }}</a>. 
+            All provisions of this Agreement which by their nature should survive termination shall 
+            survive termination, including, without limitation, ownership provisions, warranty disclaimers, 
+            indemnity and limitations of liability.
+        </p>
+
+
+        <h3>Disclaimer of Warranties</h3>
+        <p>
+            The Website is provided "as is". {{ config.COMPANY_NAME }} and its suppliers and licensors hereby 
+            disclaim all warranties of any kind, express or implied, including, without limitation, 
+            the warranties of merchantability, fitness for a particular purpose and non-infringement. 
+            Neither {{ config.COMPANY_NAME }} nor its suppliers and licensors, makes any warranty that the Website 
+            will be error free or that access thereto will be continuous or uninterrupted. You 
+            understand that you download from, or otherwise obtain content or services through, 
+            the Website at your own discretion and risk.
+        </p>
+
+
+        <h3>Limitation of Liability</h3>
+        <p>
+            In no event will {{ config.COMPANY_NAME }}, or its suppliers or licensors, be liable with respect 
+            to any subject matter of this agreement under any contract, negligence, strict liability 
+            or other legal or equitable theory for: (i) any special, incidental or consequential 
+            damages; (ii) the cost of procurement for substitute products or services; or (iii) for 
+            interruption of use or loss or corruption of data. {{ config.COMPANY_NAME }} shall have no liability 
+            for any failure or delay due to matters beyond their reasonable control. The foregoing 
+            shall not apply to the extent prohibited by applicable law.
+        </p>
+
+
+        <h3>General Representation and Warranty</h3>
+        <p>
+            You represent and warrant that (i) your use of the Website will be in strict accordance 
+            with the <a href="{{ url_for('privacy') }}" title="Privacy Policy">{{ config.SITE_NAME }} Privacy Policy</a>, 
+            with this Agreement and with all applicable laws and regulations (including without 
+            limitation any local laws or regulations in your country, state, city, or other 
+            governmental area, regarding online conduct and acceptable content, and including all 
+            applicable laws regarding the transmission of technical data exported from the United 
+            States or the country in which you reside) and (ii) your use of the Website will not 
+            infringe or misappropriate the intellectual property rights of any third party.
+        </p>
+
+
+        <h3>Indemnification</h3>
+        <p>
+            You agree to indemnify and hold harmless {{ config.COMPANY_NAME }}, its contractors, and its 
+            licensors, and their respective directors, officers, employees and agents from 
+            and against any and all claims and expenses, including attorneys' fees, arising 
+            out of your use of the Website, including but not limited to your violation of 
+            this Agreement.
+        </p>
+
+
+        <h3>Non-Affiliation</h3>
+        <p>
+            Both <a href="http://www.breezecard.com/" rel="nofollow" target="_blank" title="Breeze&reg; Card Website">Breeze&reg;</a> and
+            <a href="http://www.itsmarta.com/" rel="nofollow" target="_blank" title="MARTA&reg; Website">MARTA&reg;</a>
+            are registered trademarks of the Metropolitan Atlanta Rapid Transit Authority. {{ config.COMPANY_NAME }}, {{ config.SITE_NAME }},
+            and {{ config.DOMAIN }} is in no way affliated with or endorsed by 
+            <a href="http://www.itsmarta.com/" rel="nofollow" target="_blank" title="MARTA&reg; Website">MARTA&reg;</a>.
+            {{ config.SITE_NAME }} and {{ config.DOMAIN }} are independent products in no direct competition with 
+            <a href="http://www.breezecard.com/" rel="nofollow" target="_blank" title="Breeze&reg; Card Website">Breeze&reg;</a> or
+            <a href="http://www.itsmarta.com/" rel="nofollow" target="_blank" title="MARTA&reg; Website">MARTA&reg;</a>
+            and utilizes and displays the aforementioned registered trademarks under fair use to specifically refer to the 
+            <a href="http://www.breezecard.com/" rel="nofollow" target="_blank" title="Breeze&reg; Card Website">Breeze&reg;</a>
+            product offered by
+            <a href="http://www.itsmarta.com/" rel="nofollow" target="_blank" title="MARTA&reg; Website">MARTA&reg;</a>.
+        </p>
+
+
+        <h3>SMS/Text Message Policy</h3>
+        <p>
+            You may elect to receive reminders sent to you via SMS/text message. Please note that your carrier's
+            standard messaging rates may apply when receiving these notifications.
+        </p>
+
+
+        <h3>Miscellaneous</h3>
+        <p>
+            This Agreement constitutes the entire agreement between {{ config.COMPANY_NAME }} and you 
+            concerning the subject matter hereof, and they may only be modified by a written 
+            amendment signed by an authorized executive of {{ config.COMPANY_NAME }}, or by the posting by 
+            {{ config.COMPANY_NAME }} of a revised version. Except to the extent applicable law, if any, 
+            provides otherwise, this Agreement, any access to or use of the Website will 
+            be governed by the laws of the state of Georgia, U.S.A.
+        </p>
+    </div>
+
+    <p>
+        <small>
+            Terms of Service humbly borrowed from <a href="http://en.wordpress.com/tos/" target="_blank" rel="nofollow" title="Wordpress Terms of Service">Wordpress</a>
+            under a Creative Commons Sharealike license.
+        </small>
+    </p>
+{% endblock %}

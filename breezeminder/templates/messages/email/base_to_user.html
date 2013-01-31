@@ -1,0 +1,20 @@
+{%- block letterhead %}
+    <p>
+    {%- if current_user.first_name and current_user.first_name is not none %}
+        {{ current_user.first_name }},
+    {%- else %}
+        {{ config.SITE_NAME }} user,
+    {%- endif %}
+    </p>
+{%- endblock %}
+
+
+{%- block content %}{%- endblock %}
+
+
+{%- block signature %}
+    <p>
+        --<br />
+        The {{ config.SITE_NAME }} Team
+    </p>
+{%- endblock %}

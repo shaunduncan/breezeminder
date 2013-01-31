@@ -1,0 +1,70 @@
+{% extends 'core/base_lr_rail.html' %}
+
+
+{% import 'macros/util.html' as util with context %}
+
+
+{% block left_rail %}
+    <h1>Reminder History</h1>
+    <p>
+        {{ reminder.description() | safe }}
+    </p>
+
+    {% if history.num_pages > 1 %}
+        <p>Page {{ history.page }} of {{ history.num_pages }}</p>
+    {% endif %}
+
+    <table class="table table-striped table-bordered actions-table">
+        <thead>
+            <tr>
+                <th>Breeze&reg; Card</th>
+                <th style="text-align: center">Sent On</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in history.items %}
+                <tr>
+                    <td>{{ record.card.number_masked }}</td>
+                    <td style="text-align: center">
+                        {{ record.sent_date | strftime(default='-') }}
+                    </td>
+                    <td style="width: 45px; text-align: center">
+                        <a href="{{ url_for('user.reminders.history.view', pk_hash=record.pk_hash) }}" 
+                            class="btn" rel="tooltip" data-original-title="View Details">
+                                <i class="icon icon-search"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4"><i>No Reminders Sent</i></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    {% if history.num_pages > 1 %}
+                        <div class="pagination">
+                            <ul>
+                                <li {% if not history.has_prev %}class="active"{% endif %}>
+                                    <a href="{% if history.has_prev %}{{ url_for('user.reminders.history', pk_hash=reminder.pk_hash, page=history.prev_page) }}{% else %}#{% endif %}">&laquo;</a>
+                                </li>
+                                {% for page in history.pages() %}
+                                <li {% if history.page == page %}class="active"{% endif %}>
+                                    <a href="{% if history.page != page %}{{ url_for('user.reminders.history', pk_hash=reminder.pk_hash, page=page) }}{% else %}#{% endif %}">{{ page }}</a>
+                                </li>
+                                {% endfor %}
+                                <li {% if not history.has_next %}class="active"{% endif %}>
+                                    <a href="{% if history.has_next %}{{ url_for('user.reminders.history', pk_hash=reminder.pk_hash, page=history.next_page) }}{% else %}#{% endif %}">&raquo;</a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                    <a class="btn" href="{{ url_for('user.reminders.edit', pk_hash=reminder.pk_hash) }}" title="Back">Back</a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

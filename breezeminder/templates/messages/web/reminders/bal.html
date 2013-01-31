@@ -1,0 +1,10 @@
+{% extends 'messages/web/reminders/base.html' %}
+
+
+{% block content %}
+    <p>
+        The balance on your Breeze&reg; Card
+        ending in {{ card.last_four }} has dropped below <b>{{ reminder.threshold|money }}</b>
+        and is currently <b>{{ card.stored_value|money }}</b>.
+    </p>
+{% endblock %}

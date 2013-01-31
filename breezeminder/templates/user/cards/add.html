@@ -1,0 +1,22 @@
+{% extends 'core/base_lr_rail.html' %}
+
+
+{% import 'macros/forms.html' as forms with context %}
+{% import 'macros/util.html' as util with context %}
+
+
+{% block left_rail %}
+    <h1>Add New Breeze&reg; Card</h1>
+    {{ util.flash(messages) }}
+
+    <div class="well">
+        <form method="post" class="form-horizontal">
+            {{ forms.field_with_errors(form.cardnumber, help="Your card number can be found on the back of your Breeze&reg; Card") }}
+
+            <div class="form-actions">
+                {{ forms.submit_button('Add Card') }}
+                {{ forms.go_button('Cancel', url_for('user.cards')) }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

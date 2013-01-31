@@ -1,0 +1,158 @@
+{% macro email_linkback(card) %}
+    <p>
+        To view the details of your Breeze&reg; Card ending in {{ card.last_four }},
+        visit
+        <a title="Breeze Card Details" href="https://breezeminder.com/cards/view/{{ card.pk_hash }}">
+            https://breezeminder.com/cards/view/{{ card.pk_hash }}
+        </a>.
+    </p>
+{% endmacro %}
+
+
+{% macro reminder_form(form, submit_text) %}
+    {% import 'macros/forms.html' as forms %}
+    <div class="well">
+        <form method="post" class="form-horizontal">
+            <div class="control-group">
+                {{ form.type.label(class='control-label', text="%s *" % form.type.label.text) }}
+                <div class="controls">
+                    {{ form.type(onchange='chooseType(this)', class='span3') }}
+                    {% for help in type_help %}
+                        {% set help_style = "display: none" %}
+
+                        {% if form.type.data and form.type.data == help|first %}
+                            {% set help_style = "" %}
+                        {% elif (form.type.data is none or form.type.data == "None") and loop.index == 1 %}
+                            {# Why this is a string, I'll never know #}
+                            {% set help_style = "" %}
+                        {% endif %}
+
+                        <p id="help-type-{{ help|first }}" class="help-block help-type" style="{{ help_style }}">
+                            {{ help|last }}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="control-group threshold {% if form.balance_threshold.errors %}error{% endif %}" id="bal_thresh_ctl" {% if form.type.data != 'None' and form.type.data != 'BAL' %}style="display:none"{% endif %}>
+                {{ form.balance_threshold.label(class='control-label') }}
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">$</span>{{ form.balance_threshold(class='span2') }}
+                        {% if form.balance_threshold.errors %}
+                            <span class="help-inline error-inline">{{ form.balance_threshold.errors | first | e }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group threshold {% if form.ride_threshold.errors %}error{% endif %}" id="ride_thresh_ctl" {% if form.type.data != 'RIDE' %}style="display:none"{% endif %}>
+                {{ form.ride_threshold.label(class='control-label') }}
+                <div class="controls">
+                    {{ form.ride_threshold(class='span2') }} remaining rides
+                    {% if form.ride_threshold.errors %}
+                        <span class="help-inline error-inline">{{ form.ride_threshold.errors | first | e }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="control-group threshold {% if form.round_trip_threshold.errors %}error{% endif %}" id="round_trip_thresh_ctl" {% if form.type.data != 'ROUND_TRIP' %}style="display:none"{% endif %}>
+                {{ form.round_trip_threshold.label(class='control-label') }}
+                <div class="controls">
+                    {{ form.round_trip_threshold(class='span2') }} remaining round trips
+                    {% if form.round_trip_threshold.errors %}
+                        <span class="help-inline error-inline">{{ form.round_trip_threshold.errors | first | e }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="control-group threshold {% if form.exp_threshold.errors %}error{% endif %}" id="exp_thresh_ctl" {% if form.type.data != 'EXP' %}style="display:none"{% endif %}>
+                {{ form.exp_threshold.label(class='control-label') }}
+                <div class="controls">
+                    Less than
+                    {{ form.exp_threshold(class='input-small') }}
+                    {{ form.exp_quantity(class='input-small') }}
+                    away
+                    {% if form.exp_threshold.errors %}
+                        <span class="help-inline error-inline">{{ form.exp_threshold.errors | first | e }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            {{ forms.field_with_errors(form.notifications, help="Reminders are only sent between 7a-10p EST. SMS is subject to your carrier's standard messaging rates.") }}
+
+            <div class="control-group {% if form.valid_until.errors %}error{% endif %}">
+                {{ form.valid_until.label(class='control-label') }}
+                <div class="controls">
+                    {% for dt_field in form.valid_until %}
+                        {{ dt_field(class='input-mini') }}
+                    {% endfor %}
+                    {% if form.valid_until.errors %}
+                        <p class="help-block">{{ form.valid_until.errors | first | e }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" class="btn btn-primary" value="{{ submit_text }}" />
+                <button type="button" class="btn" onclick="window.location = '{{ url_for('user.reminders') }}';">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    {% if reminder_log %}
+    <h3>Recent Reminder History</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Breeze&reg; Card</th>
+                <th style="text-align: center">Last Sent</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in reminder_log %}
+                <tr>
+                    <td>{{ entry.card.number_masked }}</td>
+                    <td style="text-align: center">
+                        {{ entry.sent_date | strftime(default='-') }}
+                    </td>
+                    <td style="text-align: center; width: 45px">
+                        <a href="{{ url_for('user.cards.view', pk_hash=entry.card.pk_hash) }}"
+                            class="btn" rel="tooltip" data-original-title="View Card">
+                                <i class="icon icon-search"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    <a href="{{ url_for('user.reminders.history', pk_hash=reminder.pk_hash) }}"
+                        class="btn" rel="tooltip" data-original-title="View Full History">
+                        Full History
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    {% endif %}
+
+    <style>
+        label { font-weight: bold; font-size: 1.2em; }
+    </style>
+
+    <script type="text/javascript">
+        function chooseType(el)
+        {
+            $('div.threshold').hide();
+            $('div.threshold').removeClass('error');
+            $('div.threshold span.error-inline').remove();
+
+            $('.help-type').hide();
+            $('#help-type-' + $(el).attr('value')).show()
+
+            $('#' + $(el).attr('value').toLowerCase() + '_thresh_ctl').show();
+        }
+    </script>
+{% endmacro %}

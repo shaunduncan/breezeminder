@@ -1,0 +1,191 @@
+{% extends 'core/base_lr_rail.html' %}
+
+
+{% import 'macros/util.html' as util with context %}
+
+
+{% block left_rail %}
+    <h1>Breeze&reg; Card Details</h1>
+    {% if card.has_data %}
+        {% if card.expiration_date is none %}
+            {# This usually means something is wrong #}
+            {{ util.alert_box("Your card doesn't appear to have an expiration date. This may mean your card is invalid.", type="warning") }}
+        {% endif %}
+
+        {{ util.flash(messages) }}
+
+        <p class="help-block">Note: you can download expiration dates for this card using the iCal button</p>
+
+        <table class="table table-no-border table-condensed">
+            <tbody>
+                <tr>
+                    <td>
+                        <b><span class="hidden-phone">Card </span>Number</b>
+                    </td>
+                    <td>{{ card.number_masked }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>
+                            <span class="visible-phone">Exp. </span>
+                            <span class="hidden-phone">Expiration </span>
+                            Date
+                        </b>
+                    </td>
+                    <td>{{ card.expiration_date|strftime }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b><span class="hidden-phone">Stored </span>Value</b>
+                    </td>
+                    <td>{{ card.stored_value|money }}</td>
+                </tr>
+                <tr>
+                    <td><b>Last Updated</b></td>
+                    <td>{{ card.last_loaded|strftime("%m/%d/%Y %I:%M %p") }}</td>
+                </tr>
+                <tr>
+                    <td><b>Next Update</b></td>
+                    <td>{{ card.next_refresh|strftime("%m/%d/%Y %I:%M %p") }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Products</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product<span class="hidden-phone"> Name</span></th>
+                    <th style="text-align: center">
+                        <span>
+                            <span class="visible-phone">Exp. </span>
+                            <span class="hidden-phone">Expiration</span>
+                            Date
+                        </span>
+                    </th>
+                    <th style="text-align: center">
+                        <span>
+                            <span class="visible-phone">Num </span>
+                            <span class="hidden-phone">Remaining </span>
+                            Rides
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in card.products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td style="text-align: center">
+                        {% if product.expiration_date is not none %}
+                            {{ product.expiration_date|strftime }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td style="text-align: center">
+                        {% if product.remaining_rides is not none %}
+                            {{ product.remaining_rides }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3"><i>No Products</i></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>
+            Pending Autoloads
+            <i class="icon icon-question-sign" style="vertical-align: baseline; cursor: help"
+                rel="tooltip" data-original-title="Products that activate the first time they are used"></i>
+        </h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for trx in card.pending %}
+                <tr>
+                    <td>{{ trx.name }}</td>
+                    <td>{{ trx.value|money }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2"><i>No Pending Autoloads</i></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% if reminder_log %}
+        <h3>Recent Reminder History</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Reminder</th>
+                    <th style="text-align: center">Last Sent</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for details in reminder_log %}
+                    <tr>
+                        <td>{{ details['reminder'].description() | safe }}</td>
+                        <td style="text-align: center">
+                            {{ details['last_sent']|strftime(default='-') }}
+                        </td>
+                        <td style="text-align: center; width: 45px">
+                            <a href="{{ url_for('user.reminders.edit', pk_hash=details['reminder'].pk_hash) }}"
+                                class="btn" rel="tooltip" data-original-title="View Reminder">
+                                    <i class="icon icon-search"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <div class="well">
+            <a href="http://www.breezecard.com/" target="_blank" title="Purchase Trips from MARTA&reg;" class="btn" rel="nofollow">
+                <span class="hidden-phone">Purchase </span>
+                <span class="visible-phone">Buy </span>
+                Trips
+            </a>
+
+            <a href="{{ url_for('user.cards.ical', pk_hash=card.pk_hash) }}" title="Download iCal for expirations" class="btn" rel="nofollow">
+                <i class="icon-calendar"></i>
+                iCal
+            </a>
+
+            {% if card.can_refresh and config['ALLOW_USER_REFRESH'] %}
+                <a href="{{ url_for('user.cards.reload', pk_hash=card.pk_hash) }}" title="Refresh Information" class="btn">
+                    Refresh Information
+                </a>
+            {% endif %}
+
+            <a href="javascript:void(0)" onclick="promptDelete('{{ url_for('user.cards.delete', pk_hash=card.pk_hash) }}');" class="btn btn-danger" title="Delete Card">
+                Delete<span class="hidden-phone"> Card</a>
+            </a>
+        </div>
+    {% else %}
+        <div class="well">
+            <h4>Just A Moment</h4>
+            <p>
+                The details of your card aren't quite ready yet. We're
+                sorry about that. It shouldn't be long, so you should check
+                back later. In the meantime, you're more than welcome to
+                set up your <a href="{{ url_for('user.reminders') }}" title="Manage Reminders">reminders</a>
+                while you wait.
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}

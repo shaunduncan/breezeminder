@@ -1,0 +1,92 @@
+{% import 'macros/util.html' as util with context %}
+
+
+{% macro field_with_errors(field, field_class="input-xlarge", help='') %}
+    {% if field.type == 'HiddenField' %}
+        {{ field(value=field.default) }}
+    {% elif field.type == 'FormField' %}
+        <fieldset style="margin-bottom: 25px">
+            <legend style="margin-bottom: 10px">{{ field.label.text }}</legend>
+            {% for sub_field in field %}
+                {{ field_with_errors(sub_field) }}
+            {% endfor %}
+        </fieldset>
+    {% else %}
+        <div class="control-group{% if field.errors %} error{% endif %}">
+            {% if field.type == 'BooleanField' %}
+                <div class="controls">
+                    <label class="checkbox">
+                        {{ field(class=field_class) }}
+                        {{ field.label.text | safe }}
+                    </label>
+                    {% if field.errors %}
+                        <span class="help-inline">{{ field.errors | first | e }}</span>
+                    {% endif %}
+
+                    {% if help %}
+                        <p class="help-block">{{ help | safe }}</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                {% if field.flags.required %}
+                    {{ field.label(class="control-label", text="%s *" % field.label.text) }}
+                {% else %}
+                    {{ field.label(class="control-label") }}
+                {% endif %}
+                <div class="controls">
+                    {{ field(class=field_class) }}
+                    {% if field.errors %}
+                        <span class="help-inline">{{ field.errors | first | e }}</span>
+                    {% endif %}
+
+                    {% if help %}
+                        <p class="help-block">{{ help | safe }}</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+
+{% macro submit_button(text) %}
+<button type="submit" class="btn btn-primary">{{ text | e }}</button>
+{% endmacro %}
+
+
+{% macro onclick_button(text, onclick, type='button', class='') %}
+<button type="{{ type | e }}" onclick="{{ onclick | safe }}" class="btn {{ class }}">{{ text | e }}</button>
+{% endmacro %}
+
+
+{% macro go_button(text, url, type='button', class='', confirm=False) %}
+    {% if confirm %}
+        {{ onclick_button(text, "promptGo('%s')" % url, type=type, class=class) }}
+    {% else %}
+        {{ onclick_button(text, "window.location = '%s'" % url, type=type, class=class) }}
+    {% endif %}
+{% endmacro %}
+
+
+{% macro form_alerts(form) %}
+    {% if form.alerts %}
+        {% for type, message in form.alerts.items() %}
+            {{ util.alert_box(message, type) }}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+
+{% macro crud_form(form, submit_msg, cancel_action) %}
+<div class="well">
+    <form method="post" class="form-horizontal">
+        {% for field in form %}
+            {{ field_with_errors(field) }}
+        {% endfor %}
+        <div class="form-actions">
+            {{ submit_button(submit_msg) }}
+            {{ go_button('Cancel', url_for(cancel_action)) }}
+        </div>
+    </form>
+</div>
+{% endmacro %}

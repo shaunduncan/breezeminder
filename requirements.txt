@@ -1,0 +1,38 @@
+Flask
+Flask-WTF
+Jinja2
+WTForms
+Werkzeug
+pymongo
+mongoengine
+flask-mongoengine
+python-dateutil
+pytz
+Flask-Cache
+Flask-Script
+Flask-Mail
+amqplib==1.0.0
+kombu==2.1.1
+celery==2.4.2
+Flask-Celery==2.4.2
+translitcodec==0.2
+Unidecode==0.04.9
+BeautifulSoup==3.2.1
+pycrypto==2.0.1
+icalendar==3.0.1b2
+juggernaut==0.2
+requests==0.13.1
+redis==2.4.9
+python-memcached==1.48
+
+# Testing
+# mock==0.7.2
+# unittest2==0.5.1
+# pytest==2.2.3
+# pytest-pep8==0.7
+# pep8==1.2
+# https://github.com/dcramer/pyflakes/tarball/master
+
+# From other sources
+-e git://github.com/bitly/bitly-api-python.git#egg=bitly_api
+-e git://github.com/maxcountryman/flask-login.git#egg=flask-login

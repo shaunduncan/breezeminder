@@ -1,0 +1,247 @@
+{% extends 'core/base_lr_rail.html' %}
+
+
+{% import 'macros/adsense.html' as ads with context %}
+{% import 'macros/forms.html' as forms with context %}
+{% import 'macros/util.html' as util with context %}
+
+
+{% macro route_form() %}
+    <div style="padding: 5px 0px">
+        <h4>Choose Route</h4>
+        <form method="post" class="form-inline" action="{{ url_for('marta.status') }}">
+            {{ form.route(class="input-small") }}
+
+            {{ forms.submit_button('Check') }}
+
+            {% if form.route.errors %}
+                <span class="help-inline">{{ form.route.errors | first | e }}</span>
+            {% endif %}
+        </form>
+    </div>
+{% endmacro %}
+
+
+{% macro map_controls() %}
+    <div class="map-control">
+        <div class="hidden-phone">
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <span class="btn" data-action="findme">My Location</span>
+                </div>
+            </div>
+
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <span class="btn" data-action="stops">Bus Stops</span>
+                </div>
+            </div>
+
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <span class="btn btn-primary" data-action="fullscreen">Fullscreen</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="visible-phone">
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <span class="btn" data-action="findme">Me</span>
+                </div>
+
+                <div class="btn-group">
+                    <span class="btn" data-action="stops">Stops</span>
+                </div>
+
+                <div class="btn-group">
+                    <span class="btn btn-primary" data-action="fullscreen"><i class="icon icon-white icon-fullscreen"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro fullscreen_controls() %}
+    <div class="map-control">
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <span class="btn btn-primary" data-action="fullscreen">Exit</span>
+            </div>
+
+            <div class="btn-group">
+                <span class="btn" data-action="findme">Me</span>
+            </div>
+
+            <div class="btn-group">
+                <span class="btn" data-action="stops">Stops</span>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% block head_scripts %}
+    {% if route %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/marta.css') }}" />
+        <script type="text/javascript" src="{{ config.JUGGERNAUT }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/mustache.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/underscore.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/backbone.min.js') }}"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ config.GOOGLE_MAPS_APIKEY }}&libraries=geometry,adsense&sensor=false"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/modal.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/progress.js') }}"></script>
+    {% endif %}
+{% endblock %}
+
+
+{% block foot_scripts %}
+    {% if route %}
+        {{ ads.ad_vars() }}
+        <script type="text/javascript" src="{{ url_for('static', filename='js/marta.js') }}"></script>
+        <div id="map-modal"></div>
+    {% endif %}
+{% endblock %}
+
+
+{% block right_rail %}
+    <style>
+        .container > .row > .span3 { text-align: left !important; }
+    </style>
+
+    {% if route %}
+        <div class="hidden-phone">
+            <div style="padding: 5px 0px">
+                <h4>Bus Status</h4>
+                <div class="ctrl-bus-status"></div>
+                <div class="geo-error">
+                    <p>
+                        Your exact location could not be determined. You will not be
+                        able to view next and near bus information. You can still
+                        choose a stop as your current position by clicking the button
+                        to show stops and selecting one from the map.
+                    </p>
+                </div>
+            </div>
+
+            <div style="padding: 5px 0px">
+                <h4>Map Controls</h4>
+                {{ map_controls() }}
+            </div>
+
+            {{ route_form() }}
+        </div>
+    {% endif %}
+{% endblock right_rail %}
+
+
+{% block left_rail %}
+    {% if route %}
+        <div class="visible-phone" style="float: right">{{ map_controls() }}</div>
+        <h1>Route {{ route.name }}</h1>
+
+        <div id="map-content">
+            <div id="map" data-route="{{route.name}}"></div>
+            <div id="fullscreen-ctrl">{{ fullscreen_controls() }}</div>
+        </div>
+
+        <div class="attribution">
+            <span class="hidden-phone">
+                <img src="https://i.creativecommons.org/l/by-sa/3.0/80x15.png" alt="Creative Commons BY-SA" />
+                Maps Icons by Nicolas Mollet - <a href="http://mapicons.nicolasmollet.com/" target="_blank" rel="nofollow">mapicons.nicolasmollet.com</a>
+            </span>
+
+            <span class="visible-phone">
+                Icons by <a href="http://mapicons.nicolasmollet.com/" target="_blank" rel="nofollow">Nicolas Mollet</a>
+            </span>
+        </div>
+
+        <div class="visible-phone">{{ route_form() }}</div>
+
+        {% raw %}
+            <div id="templates">
+                <div class="template" data-name="ul">
+                    <ul class="plain">
+                        {{#list}}
+                            <li>{{{.}}}</li>
+                        {{/list}}
+                    </ul>
+                </div>
+
+                <div class="template" data-name="geo">
+                    <i class="icon icon-screenshot"></i>
+                    <a href="javascript:void(0)" data-action="geolocate">Find Me By GPS</a>
+                </div>
+
+                <div class="template" data-name="busStatus">
+                    <h6>Buses On The Way</h6>
+                    <ul class="plain">
+                        {{#next}}
+                            <li>
+                                <i class="icon icon-map-marker"></i>
+                                <a href="javascript:void(0)" class="marker-toggle" data-action="watchbus" data-id="{{ id }}">
+                                    {{ direction }} #{{ id }}
+                                </a>
+                            </li>
+                        {{/next}}
+                    </ul>
+
+                    <h6>Nearest Buses</h6>
+                    <ul class="plain">
+                        {{#near}}
+                            <li>
+                                <i class="icon icon-map-marker"></i>
+                                <a href="javascript:void(0)" class="marker-toggle" data-action="watchbus" data-id="{{ id }}">
+                                    {{ direction }} #{{ id }}
+                                </a>
+                            </li>
+                        {{/near}}
+                    </ul>
+                </div>
+
+                <div class="template" data-name="busSchedule">
+                    <h6>Bus Schedule</h6>
+                    <ul class="plain">
+                        {{#times}}<li>{{{.}}}</li>{{/times}}
+                    </ul>
+                </div>
+
+                <div class="template" data-name="markme">
+                    <i class="icon icon-map-marker"></i>
+                    <a href="javascript:void(0)" data-action="markme" data-id="{{ stop }}">Make This My Location</a>
+                </div>
+
+                <div class="template" data-name="stopInfo">
+                    <h4>{{ title }}</h4>
+                    <div class="bus-status">{{{ busStatus }}}</div>
+                    <div class="bus-schedule">{{{ upcoming }}}</div>
+                    <div class="geo-controls">{{{ geo }}}</div>
+                </div>
+
+                <div class="template" data-name="busInfo">
+                    <h4>Bus #{{ id }}</h4>
+                    <p>Headed {{ direction }}<br />
+                        <span class="distance" style="display:block">{{ distance }}</span>
+                        <b style="color: {{ color }}">{{ schedule }}</b><br />
+                        <small>As Of {{ statusTime }}</small>
+                    </p>
+                </div>
+
+                <div class="template" data-name="me">
+                    <h4>You Are Here</h4>
+                    <div class="bus-status"></div>
+                </div>
+            </div>
+        {% endraw %}
+    {% else %}
+        <h1>Realtime MARTA&reg; Status</h1>
+        {{ util.flash(messages) }}
+        {{ route_form() }}
+    {% endif %}
+{% endblock left_rail %}
+
+
+{% if route %}
+    {% block ad_left_rail_foot %}{% endblock ad_left_rail_foot %}
+{% endif %}

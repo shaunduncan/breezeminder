@@ -1,0 +1,15 @@
+{% extends 'messages/email/base_to_user.html' %}
+
+
+{% from 'macros/reminders.html' import email_linkback with context %}
+
+
+{% block content %}
+    <p>
+        This is just a friendly reminder that the balance on your Breeze&reg; Card
+        ending in {{ card.last_four }} has recently increased and is now
+        <b>{{ card.stored_value|money }}</b>.
+    </p>
+
+    {{ email_linkback(card) }}
+{% endblock %}

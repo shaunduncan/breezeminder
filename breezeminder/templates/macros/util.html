@@ -1,0 +1,12 @@
+{% macro flash(messages) %}
+    {% for type, message in messages %}
+        {{ alert_box(message, type) }}
+    {% endfor %}
+{% endmacro %}
+
+
+{% macro alert_box(message, type=None) %}
+    <div class="alert {% if type is not none %}alert-{{ type }}{% endif %}">
+        {{ message | safe }}
+    </div>
+{% endmacro %}

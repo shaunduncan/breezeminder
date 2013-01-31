@@ -1,0 +1,27 @@
+{% extends 'core/base_lr_rail.html' %}
+
+{% import 'macros/forms.html' as util %}
+
+{% block left_rail %}
+    <h1>{{ title }}</h1>
+    <p>
+        We're glad you've chosen to sign up for {{ config.SITE_NAME }}! We really hope you like what
+        we have for in store for you, as simple as it may be. To proceed with registration,
+        simply fill out the form below, and you're well on your way. It's completely free!
+    </p>
+
+    {{ util.form_alerts(form) }}
+    <div class="well">
+        <form method="post" class="form-horizontal">
+            <fieldset>
+                {% for field in form %}
+                    {{ util.field_with_errors(field) }}
+                {% endfor %}
+            </fieldset>
+            <div class="form-actions">
+                {{ util.submit_button('Register') }}
+                {{ util.go_button('Cancel', '/') }}
+            </div>
+        </form>
+    </div>
+{% endblock %}
