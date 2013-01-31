@@ -1,4 +1,4 @@
-//(function($) {
+(function($) {
     // The application
     var marta;
 
@@ -380,7 +380,7 @@
 
     // Initialize 'me' thing
     Marta.fn.initMe = function(lat, lng) {
-        if(!lng && !lng) return;
+        if(!lat && !lng) return;
 
         var pos = lat;
 
@@ -490,8 +490,8 @@
 
         for(var i = 0; i < stops.length; i++) {
             this.stops.add(new Stop(stops[i].id, stops[i].pt, _.extend(cfg, {
-                title: stop.name,
-                content: this.TPL.stopInfo({title: stop.name})
+                title: stops[i].name,
+                content: this.TPL.stopInfo({title: stops[i].name})
             })));
         }
     }
@@ -713,4 +713,4 @@
             }).show();
         }
     });
-//})(jQuery);
+})(jQuery);
