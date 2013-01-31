@@ -1,3 +1,5 @@
+*This is the open source fork of what powers breezeminder.com*
+
 breezeminder
 ============
 
